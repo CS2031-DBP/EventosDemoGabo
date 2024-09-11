@@ -3,21 +3,20 @@ package dbp.week5.asesoriaeventos.User.domain;
 import dbp.week5.asesoriaeventos.User.exceptions.UserNotFoundException;
 import dbp.week5.asesoriaeventos.User.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
+    
+    final private UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Value("${WHEREBY_API_KEY}")
-    private String wherebyApiKey;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User save(User user) {
-        User savedUser = userRepository.save(user);
-        return savedUser;
+        return userRepository.save(user);
     }
 
     public Iterable<User> findAll() {

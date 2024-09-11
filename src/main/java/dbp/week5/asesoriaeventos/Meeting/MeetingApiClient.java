@@ -19,12 +19,17 @@ import java.util.Map;
 @Component
 public class MeetingApiClient {
 
+    final private ApplicationEventPublisher eventPublisher;
+
     @Autowired
-    private ApplicationEventPublisher eventPublisher;
+    public MeetingApiClient(ApplicationEventPublisher eventPublisher) {
+        this.eventPublisher = eventPublisher;
+    }
 
     @Value("${WHEREBY_API_KEY}")
     private String wherebyApiKey;
 
+    final private HttpClient httpClient = HttpClient.newHttpClient();
 
     @Async
     public void createWherebyMeeting(User user) throws IOException, InterruptedException {
@@ -35,7 +40,7 @@ public class MeetingApiClient {
                 .POST(HttpRequest.BodyPublishers.ofString(new ObjectMapper().writeValueAsString(data)))
                 .build();
 
-        var response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+        var response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
         if (response.statusCode() == 201) {
             var responseBody = new ObjectMapper().readTree(response.body());
