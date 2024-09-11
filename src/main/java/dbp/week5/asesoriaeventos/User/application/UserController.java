@@ -1,6 +1,5 @@
 package dbp.week5.asesoriaeventos.User.application;
 
-
 import dbp.week5.asesoriaeventos.Meeting.MeetingApiClient;
 import dbp.week5.asesoriaeventos.User.domain.User;
 import dbp.week5.asesoriaeventos.User.domain.UserService;
@@ -14,9 +13,14 @@ import java.io.IOException;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final MeetingApiClient meetingApiClient;
 
+    @Autowired
+    public UserController(UserService userService, MeetingApiClient meetingApiClient) {
+        this.userService = userService;
+        this.meetingApiClient = meetingApiClient;
+    }
 
     @GetMapping
     public ResponseEntity<Iterable<User>> findAll() {
@@ -49,9 +53,6 @@ public class UserController {
     public ResponseEntity<User> parcialUpdate(@PathVariable Integer id, @RequestBody User user) {
         return ResponseEntity.ok(userService.parcialUpdate(id, user));
     }
-
-    @Autowired
-    private MeetingApiClient meetingApiClient;
 
     @PostMapping("/{userId}/meetings")
     public ResponseEntity<?> createMeeting(@PathVariable Integer userId) throws IOException, InterruptedException {
