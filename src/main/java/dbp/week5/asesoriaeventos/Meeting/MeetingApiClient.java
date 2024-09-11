@@ -28,7 +28,7 @@ public class MeetingApiClient {
 
     @Async
     public void createWherebyMeeting(User user) throws IOException, InterruptedException {
-        var data = Map.of("endDate", "2099-02-18T14:23:00.000Z", "fields", Collections.singletonList("hostRoomUrl"));
+        var data = Map.of("endDate", "2024-10-18T14:23:00.000Z", "fields", Collections.singletonList("hostRoomUrl"));
         var request = HttpRequest.newBuilder(URI.create("https://api.whereby.dev/v1/meetings"))
                 .header("Authorization", "Bearer " + wherebyApiKey)
                 .header("Content-Type", "application/json")
@@ -40,7 +40,7 @@ public class MeetingApiClient {
         if (response.statusCode() == 201) {
             var responseBody = new ObjectMapper().readTree(response.body());
             System.out.println("Soy un mensaje de MeetingApiClient");
-//            eventPublisher.publishEvent(new MeetingCreatedEvent(this, user, responseBody));
+            eventPublisher.publishEvent(new MeetingCreatedEvent(this, user, responseBody));
         } else {
             throw new RuntimeException("Error creating meeting");
         }
