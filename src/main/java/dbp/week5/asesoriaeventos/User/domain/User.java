@@ -1,7 +1,5 @@
 package dbp.week5.asesoriaeventos.User.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import dbp.week5.asesoriaeventos.Meeting.Meeting;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
