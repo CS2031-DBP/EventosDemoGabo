@@ -1,11 +1,9 @@
 package dbp.week5.asesoriaeventos.User.domain;
 
-import dbp.week5.asesoriaeventos.User.event.WelcomeEmailEvent;
 import dbp.week5.asesoriaeventos.User.exceptions.UserNotFoundException;
 import dbp.week5.asesoriaeventos.User.infrastructure.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 @Service
