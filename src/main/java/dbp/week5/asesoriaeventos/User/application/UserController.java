@@ -1,11 +1,14 @@
 package dbp.week5.asesoriaeventos.User.application;
 
 
+import dbp.week5.asesoriaeventos.Meeting.MeetingApiClient;
 import dbp.week5.asesoriaeventos.User.domain.User;
 import dbp.week5.asesoriaeventos.User.domain.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/user")
@@ -46,5 +49,16 @@ public class UserController {
     public ResponseEntity<User> parcialUpdate(@PathVariable Integer id, @RequestBody User user) {
         return ResponseEntity.ok(userService.parcialUpdate(id, user));
     }
+
+    @Autowired
+    MeetingApiClient meetingApiClient;
+
+    @PostMapping("/{userId}/meetings")
+    public ResponseEntity<?> createMeeting(@PathVariable Integer userId) throws IOException, InterruptedException {
+        User user = userService.findById(userId);
+        meetingApiClient.createWherebyMeeting(user);
+        return ResponseEntity.accepted().build();
+    }
+
 
 }
