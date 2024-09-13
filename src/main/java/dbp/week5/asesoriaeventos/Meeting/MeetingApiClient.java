@@ -19,12 +19,12 @@ import java.util.Map;
 @Component
 public class MeetingApiClient {
 
-//    final private ApplicationEventPublisher eventPublisher;
+    final private ApplicationEventPublisher eventPublisher;
 
-//    @Autowired
-//    public MeetingApiClient(ApplicationEventPublisher eventPublisher) {
-//        this.eventPublisher = eventPublisher;
-//    }
+    @Autowired
+    public MeetingApiClient(ApplicationEventPublisher eventPublisher) {
+        this.eventPublisher = eventPublisher;
+    }
 
     @Value("${WHEREBY_API_KEY}")
     private String wherebyApiKey;
@@ -46,7 +46,7 @@ public class MeetingApiClient {
         if (response.statusCode() == 201) {
             var responseBody = new ObjectMapper().readTree(response.body());
             System.out.println("Reunion creada correctamente");
-//            eventPublisher.publishEvent(new MeetingCreatedEvent(this, user, responseBody));
+            eventPublisher.publishEvent(new MeetingCreatedEvent(this, user, responseBody));
         } else {
             throw new RuntimeException("Error creating meeting");
         }
